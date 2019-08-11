@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  firebase:
+    build: .
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:3000"
