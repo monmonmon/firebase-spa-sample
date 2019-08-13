@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import LoadingOverlay from 'react-loading-overlay'
 import firebase from 'firebase/app'
 import 'firebase/storage'
 import 'firebase/firestore'
@@ -7,7 +8,7 @@ import _ from 'lodash'
 class VideoUpload extends Component {
   constructor(props) {
     super(props)
-    this.state = { video: null }
+    this.state = { video: null, loading: false }
   }
   onFileSelect(event) {
     event.preventDefault()
@@ -16,6 +17,7 @@ class VideoUpload extends Component {
   }
   onSubmit(event) {
     event.preventDefault()
+    this.setState({ loading: true })
     this.fileUpload(this.state.video)
   }
   async fileUpload(video) {
@@ -30,7 +32,6 @@ class VideoUpload extends Component {
       }
       const fileSnapshot = await videoStorageRef.put(video, metadataForStorage)
       console.log(fileSnapshot)
-
       if (video.type === 'video/mp4') {
         // メタデータをFirestoreに保存
         const downloadURL = await videoStorageRef.getDownloadURL()
@@ -38,10 +39,8 @@ class VideoUpload extends Component {
         metadataForFirestore = Object.assign(metadataForFirestore, { downloadURL })
         this.saveVideoMetadata(metadataForFirestore)
       }
-
-      if (fileSnapshot.state === 'success') {
-        this.setState({ video: null })
-      } else {
+      this.setState({ video: null, loading: false })
+      if (fileSnapshot.state !== 'success') {
         alert('ファイルアップロードに失敗しました')
       }
     } catch(error) {
@@ -59,11 +58,13 @@ class VideoUpload extends Component {
   }
   render() {
     return (
-      <form onSubmit={ e => this.onSubmit(e) }>
-        <h2>Video Upload</h2>
-        <input type="file" accept="video/*" onChange={ e => this.onFileSelect(e) } />
-        <button type="submit">Upload Video</button>
-      </form>
+      <LoadingOverlay active={ this.state.loading } spinner text="Loading your content...">
+        <form onSubmit={ e => this.onSubmit(e) }>
+          <h2>Video Upload</h2>
+          <input type="file" accept="video/*" onChange={ e => this.onFileSelect(e) } />
+          <button type="submit">Upload Video</button>
+        </form>
+      </LoadingOverlay>
     )
   }
 }
