@@ -49,9 +49,10 @@ class VideoUpload extends Component {
     }
   }
   async saveVideoMetadata(metadata) {
-    const userUid = firebase.auth().currentUser.uid
+    // NOTE: VideoFeed で currentUser がなぜか引けないので動画ファイルのパスに userUid を含めないように変更
+    //const userUid = firebase.auth().currentUser.uid
     const videoRef = firebase.firestore()
-      .doc(`users/${userUid}`)
+      //.doc(`users/${userUid}`)
       .collection('videos').doc()
     metadata = Object.assign(metadata, { uid: videoRef.id })
     await videoRef.set(metadata, { merge: true })
