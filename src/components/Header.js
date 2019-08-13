@@ -17,10 +17,10 @@ const styles = theme => ({
     flexGrow: 1,
   },
   button: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
   },
   rightIcon: {
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing(1),
   },
   avatar: {
     margin: 10,
@@ -82,7 +82,7 @@ class Header extends Component {
       <div className={ classes.root }>
         <AppBar position="static" color="primary">
           <Toolbar>
-            <Typography variant="title" color="inherit" className={ classes.flex }>
+            <Typography variant="h1" color="inherit" className={ classes.flex }>
               <Link to="/" className={ classes.link }>Firebase Videos</Link>
             </Typography>
             { this.state.isLoggedIn ? this.renderLoggedInComponent(classes) : this.renderLoginComponent(classes) }
