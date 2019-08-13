@@ -1,3 +1,5 @@
+[Firebaseによるサーバーレスシングルページアプリケーション](https://www.amazon.co.jp/dp/B07RWXSNRH9)に沿って作成
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
