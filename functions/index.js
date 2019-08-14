@@ -1,6 +1,8 @@
 const funcs = {
   transcodeVideo: './transcodeVideo',
   saveUser: './saveUser',
+  onUsersVideoUpdate: './copyVideoMetadata',
+  onUsersVideoCreate: './copyVideoMetadata',
 }
 
 for (let funcName in funcs) {
