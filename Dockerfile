@@ -1,4 +1,6 @@
-FROM "node:8.16.0-alpine"
-RUN npm i -g yarn
-RUN yarn global add create-react-app firebase-tools
+FROM "node:12.8.0-alpine"
 WORKDIR /app
+RUN apk update \
+    yarn global upgrade \
+    yarn global add create-react-app firebase-tools
+CMD yarn start
